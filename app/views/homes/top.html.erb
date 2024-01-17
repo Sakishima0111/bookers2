@@ -10,10 +10,13 @@
 
 <p>about various books!</p>
 
-
-<li>
-  <%= link_to "Log in", new_user_session_path %>
-</li>
-<li>
-  <%= link_to "Sign up", new_user_registration_path %>
-</li>
+<div class="btn-wrapper col-10 mx-auto"></div>
+  <div class="row">
+    <li>
+      <%= link_to "Log in", new_user_session_path, class: "btn btn-info btn-sm btn-block mb-3 sign_in" %>
+    </li>
+    <li>
+      <%= link_to "Sign up", new_user_registration_path %>
+    </li>
+  </div>
+</div>
