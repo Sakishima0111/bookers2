@@ -9,7 +9,7 @@ class BooksController < ApplicationController
     @book.user_id = current_user.id
     @book.save
     redirect_to book_path(@book)
-  #後で↑リダイレクト先修正↓追加
+  #↓フラッシュメッセージ記述追加
   end
 
   def show

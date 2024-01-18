@@ -14,7 +14,7 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit: [100, 100]).processed
   end
 
-  has_many :book, dependent: :destroy
+  has_many :books, dependent: :destroy
   has_one_attached :profile_image
 
   def get_profile_image
