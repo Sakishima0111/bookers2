@@ -6,11 +6,15 @@ class BooksController < ApplicationController
   end
 
   def create
+    @user = User.find(current_user.id)
     @book = Book.new(book_params)
-    @book.user_id = current_user.id
-    @book.save
-    redirect_to book_path(@book)
-  #↓フラッシュメッセージ記述追加
+    if @book.save
+      flash[:notice] = "You have created book successfully."
+      redirect_to book_path(@book)
+    else
+      flash.now[:notice]
+      redirect_to books_path
+    end
   end
 
   def show

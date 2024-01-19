@@ -1,6 +1,19 @@
-<div class="container px-5 px-sm-0">
-  <div class="row">
-    <div class="col-md-3">
+<div>
+    <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %>"><%= message %></div>
+    <% end %>
+</div>
+
+<% if @book.errors.any? %>
+  <%= @book.errors.count %> error prohibited this obj being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
 
       <h2>User info</h2>
       <table class= "table">
@@ -33,6 +46,3 @@
         <%= f.submit 'Create Book', class: "btn btn-success" %>
       <% end %>
 
-    </div>
-  </div>
-</div>
