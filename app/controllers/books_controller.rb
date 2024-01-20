@@ -15,7 +15,7 @@ class BooksController < ApplicationController
     else
       flash[:notice] = "error prohibited this obj being saved:"
       flash.now[:errors] = @book.errors.full_messages
-      redirect_to books_path
+      render :index
     end
   end
 
