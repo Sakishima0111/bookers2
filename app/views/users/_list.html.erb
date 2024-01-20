@@ -16,8 +16,7 @@
       <h2>User info</h2>
       <table class= "table">
         <tbody>
-          <!--ここにプロフィール画像-->
-          <tr></tr>
+          <tr><%= image_tag @user.get_profile_image(100,100) %></tr>
           <tr>
             <th>name</th>
             <th><%= @user.name %></th>
