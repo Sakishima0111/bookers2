@@ -8,11 +8,13 @@ class BooksController < ApplicationController
   def create
     @user = User.find(current_user.id)
     @book = Book.new(book_params)
+    @book.user_id = current_user.id
     if @book.save
       flash[:notice] = "You have created book successfully."
       redirect_to book_path(@book)
     else
-      flash.now[:notice]
+      flash[:notice] = "error prohibited this obj being saved:"
+      flash.now[:errors] = @book.errors.full_messages
       redirect_to books_path
     end
   end
