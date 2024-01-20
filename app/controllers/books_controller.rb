@@ -20,7 +20,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find(current_user.id)
     @book = Book.find(params[:id])
     @newBook = Book.new
   end
@@ -32,8 +32,12 @@ class BooksController < ApplicationController
 
   def update
     book = Book.find(params[:id])
-    book = Book.update(book_params)
-    redirect_to book_path(book)
+    if book = Book.update(book_params)
+       redirect_to book_path(book), notice: "You have updated book successfully."
+    else
+      flash.now[:alert] = "errors prohibited this book from being saved:"
+      render :edit
+    end
   end
 
   def destroy
