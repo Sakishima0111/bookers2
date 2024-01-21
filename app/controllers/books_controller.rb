@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+ before_action :is_matching_login_user, only: [:edit, :update]
+
   def index
     @user = User.find(current_user.id)
     @book = Book.new
@@ -11,17 +13,17 @@ class BooksController < ApplicationController
     @book.user_id = current_user.id
     if @book.save
       flash[:notice] = "You have created book successfully."
-      redirect_to book_path(@book)
+      redirect_to book_path(@book.id)
     else
-      flash[:notice] = "error prohibited this obj being saved:"
-      flash.now[:errors] = @book.errors.full_messages
+      @user = User.find(current_user.id)
+      @books = Book.all
       render :index
     end
   end
 
   def show
-    @user = User.find(current_user.id)
     @book = Book.find(params[:id])
+    @user = User.find(@book.user_id)
     @newBook = Book.new
   end
 
@@ -32,10 +34,12 @@ class BooksController < ApplicationController
 
   def update
     book = Book.find(params[:id])
-    if book = Book.update(book_params)
-       redirect_to book_path(book), notice: "You have updated book successfully."
+    if book.update(book_params)
+       redirect_to book_path(book.id)
+       flash[:notice] = "You have updated book successfully."
     else
-      flash.now[:alert] = "errors prohibited this book from being saved:"
+      @book=Book.find(params[:id])
+      @book.update(book_params)
       render :edit
     end
   end
@@ -51,5 +55,13 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
+
+  def is_matching_login_user
+      book = Book.find(params[:id])
+    unless book.user.id == current_user.id
+      redirect_to books_path
+    end
+  end
+
 
 end
